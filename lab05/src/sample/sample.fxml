@@ -1,28 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Text?>
 
-<GridPane fx:id="root" alignment="center" hgap="10" prefHeight="253.0" prefWidth="469.0" vgap="10" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<GridPane fx:id="root" alignment="center" hgap="10" prefHeight="400.0" prefWidth="600.0" vgap="10" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <columnConstraints>
       <ColumnConstraints maxWidth="-Infinity" minWidth="-Infinity" />
    </columnConstraints>
    <rowConstraints>
       <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
    </rowConstraints>
    <children>
-      <TableView fx:id="table" editable="true" prefHeight="300.0" prefWidth="600.0">
+      <TableView fx:id="table" editable="true" prefHeight="264.0" prefWidth="600.0" GridPane.rowIndex="1">
         <columns>
-          <TableColumn fx:id="sidCol" prefWidth="111.0" text="SID" />
-          <TableColumn fx:id="assignCol" prefWidth="100.0" text="Assignments" />
-            <TableColumn fx:id="midCol" prefWidth="96.0" text="Midterm" />
-            <TableColumn fx:id="examCol" prefWidth="98.0" text="Final Exam" />
-            <TableColumn fx:id="markCol" prefWidth="90.0" text="Final Mark" />
-            <TableColumn fx:id="gradeCol" prefWidth="104.0" text="Letter Grade" />
+          <TableColumn fx:id="sidCol" prefWidth="111.0" resizable="false" text="SID" />
+          <TableColumn fx:id="assignCol" prefWidth="100.0" resizable="false" text="Assignments" />
+            <TableColumn fx:id="midCol" prefWidth="96.0" resizable="false" text="Midterm" />
+            <TableColumn fx:id="examCol" prefWidth="98.0" resizable="false" text="Final Exam" />
+            <TableColumn fx:id="markCol" prefWidth="90.0" resizable="false" text="Final Mark" />
+            <TableColumn fx:id="gradeCol" prefWidth="104.0" resizable="false" text="Letter Grade" />
         </columns>
       </TableView>
+      <Pane prefHeight="139.0" prefWidth="600.0" GridPane.rowIndex="2">
+         <children>
+            <TextField fx:id="sidText" layoutX="82.0" layoutY="14.0" promptText="SID" />
+            <TextField fx:id="midText" layoutX="82.0" layoutY="52.0" promptText="Midterm/100" />
+            <TextField fx:id="assignText" layoutX="317.0" layoutY="14.0" promptText="Assignments/100" />
+            <TextField fx:id="finalText" layoutX="317.0" layoutY="52.0" promptText="Final Exam/100" />
+            <Button fx:id="addButton" layoutX="82.0" layoutY="89.0" mnemonicParsing="false" onAction="#clicked" text="Add" />
+            <Text layoutX="31.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SID:" />
+            <Text layoutX="17.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Midterm:" />
+            <Text layoutX="240.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Assignments:" />
+            <Text layoutX="243.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Final Exams:" />
+         </children>
+      </Pane>
    </children>
 </GridPane>

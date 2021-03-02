@@ -2,10 +2,10 @@ package sample;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.TableColumn;
 
+import javafx.event.ActionEvent;
 
 
 public class Controller {
@@ -19,9 +19,15 @@ public class Controller {
     @FXML private TableColumn<StudentRecord,String> gradeCol;
     @FXML private TableView<StudentRecord> table;
 
+    @FXML private TextField sidText;
+    @FXML private TextField midText;
+    @FXML private TextField finalText;
+    @FXML private TextField assignText;
+    @FXML private Button addButton;
+
     public static ObservableList<StudentRecord> data = DataSource.getAllMarks();
 
-    @FXML
+
     public void init(){
         table.setEditable(true);
         table.setItems(data);
@@ -32,4 +38,12 @@ public class Controller {
         markCol.setCellValueFactory(new PropertyValueFactory<StudentRecord,String>("FinalGrade"));
         gradeCol.setCellValueFactory(new PropertyValueFactory<StudentRecord,String>("LetterGrade"));
     }
+    @FXML
+    public void clicked(ActionEvent e){
+        StudentRecord student = new StudentRecord(sidText.getText(), Float.parseFloat(midText.getText()),
+                                    Float.parseFloat(assignText.getText()),Float.parseFloat(finalText.getText()));
+        data.add(student);
+    }
+
+
 }

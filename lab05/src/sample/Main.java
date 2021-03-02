@@ -24,7 +24,7 @@ public class Main extends Application {
 
         myCont.init();
 
-        primaryStage.setScene(new Scene(root, 600, 300));
+        primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
 
     }

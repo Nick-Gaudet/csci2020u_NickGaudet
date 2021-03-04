@@ -40,9 +40,14 @@ public class Controller {
     }
     @FXML
     public void clicked(ActionEvent e){
-        StudentRecord student = new StudentRecord(sidText.getText(), Float.parseFloat(midText.getText()),
-                                    Float.parseFloat(assignText.getText()),Float.parseFloat(finalText.getText()));
-        data.add(student);
+        try{
+            StudentRecord student = new StudentRecord(sidText.getText(), Float.parseFloat(midText.getText()),
+                    Float.parseFloat(assignText.getText()),Float.parseFloat(finalText.getText()));
+            data.add(student);
+        }catch(Exception a){
+            System.out.println("Invalid parameters!");
+        }
+
     }
 
 

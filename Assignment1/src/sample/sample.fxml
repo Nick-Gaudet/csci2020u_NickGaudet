@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<GridPane alignment="center" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/15.0.1" fx:controller="sample.Controller">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <columnConstraints>
       <ColumnConstraints />
    </columnConstraints>
@@ -17,7 +16,9 @@
    <children>
       <TableView fx:id="table" prefHeight="341.0" prefWidth="566.0">
         <columns>
-          <TableColumn fx:id="fileCol" prefWidth="565.0" text="Files" />
+          <TableColumn fx:id="fileCol" prefWidth="205.0" text="File Name" />
+            <TableColumn fx:id="classCol" prefWidth="178.0" text="Class" />
+            <TableColumn fx:id="probCol" prefWidth="182.0" text="Probability" />
         </columns>
       </TableView>
    </children>

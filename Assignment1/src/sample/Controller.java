@@ -3,10 +3,11 @@ package sample;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 
+import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,60 +21,80 @@ public class Controller {
     @FXML private TableColumn<TestFile,String> classCol;
     @FXML private TableColumn<TestFile,String> probCol;
     @FXML private TableView<TestFile> table;
+    @FXML private TextField accuracyField;
+    @FXML private TextField precisionField;
+    @FXML private TextField lowBoundField;
+    @FXML private TextField upBoundField;
     private HashMap<String,Float> PrWH = new HashMap<>();
     private HashMap<String,Float> PrWS = new HashMap<>();
     private List<TestFile> testFiles = new ArrayList<>();
     private HashMap<File, HashSet<String>> wordsOfFiles = new HashMap<>();
+    private List<File> allTrainHamFiles = new ArrayList<>();
+    private List<File> allTrainSpamFiles = new ArrayList<>();
+    private List<File> allTestHamFiles = new ArrayList<>();
+    private List<File> allTestSpamFiles = new ArrayList<>();
 
-    private List<File> allTrainHamFiles = new ArrayList<File>(Arrays.asList(getTrainHamNames()));
-    private List<File> allTrainSpamFiles = new ArrayList<File>(Arrays.asList(getTrainSpamNames()));
-    private List<File> allTestHamFiles = new ArrayList<File>(Arrays.asList(getTestHamNames()));
-    private List<File> allTestSpamFiles = new ArrayList<File>(Arrays.asList(getTestSpamNames()));
+    private HashSet<String> bagOfWords = new HashSet<>();
+
+
     private HashMap<File, HashSet<String>> spamTrainFilesMap = new HashMap<>();
     private HashMap<File, HashSet<String>> hamTrainFilesMap = new HashMap<>();
     private HashMap<File, HashSet<String>> spamTestFilesMap = new HashMap<>();
     private HashMap<File, HashSet<String>> hamTestFilesMap = new HashMap<>();
     private HashMap<File, HashSet<String>> mapOfTestFiles = new HashMap<>();
-
+    private HashMap<String,Float> PROBABILITYMAP = new HashMap<>();
+    private File mainDirectory;
     private float accuracy = 0;
     private float precision = 0;
+    private float lB = (float) 0.27;
+    private float uB = (float )0.79;
+    private ObservableList<TestFile> data = FXCollections.observableArrayList();
 
-    public void init(){
+    public void setMainDirectory(File mainDirectory){
+        this.mainDirectory = mainDirectory;
+        System.out.println(this.mainDirectory.getAbsolutePath());
+    }
 
-        ObservableList<TestFile> data = FXCollections.observableArrayList();
-        try {
-//            System.out.println(getHamWords(getHamNames()));
-//            getHamWords(getHamNames());
-//            getSpamWords(getSpamNames());
-//            System.out.println(getHamWords(getHamNames()));
-//            System.out.println(getSpamWords(getSpamNames()));
 
-            // TRAINING PHASE
-            System.out.println("------------TRAINING-----------");
+    public void training(){
+        allTrainHamFiles = new ArrayList<File>(Arrays.asList(getTrainHamNames()));
+        allTrainSpamFiles = new ArrayList<File>(Arrays.asList(getTrainSpamNames()));
+        // TRAINING PHASE
+        System.out.println("------------TRAINING-----------");
 
-            //Store ham files with words of each file
-            spamTrainFilesMap = storeWords(allTrainSpamFiles);
-            hamTrainFilesMap = storeWords(allTrainHamFiles);
+        //Store ham files with words of each file
+        spamTrainFilesMap = storeWords(allTrainSpamFiles);
+        hamTrainFilesMap = storeWords(allTrainHamFiles);
 
-            List<File> allTrainFiles = new ArrayList<>(allTrainSpamFiles);
+        List<File> allTrainFiles = new ArrayList<>(allTrainSpamFiles);
 
-            allTrainFiles.addAll(allTrainHamFiles);
-            wordsOfFiles = storeWords(allTrainFiles);
-            HashSet<String> bagOfWords = new HashSet<>();
-            for(Map.Entry<File,HashSet<String>> f : wordsOfFiles.entrySet()){
-                bagOfWords.addAll(f.getValue());
+        allTrainFiles.addAll(allTrainHamFiles);
+        wordsOfFiles = storeWords(allTrainFiles);
+        for(Map.Entry<File,HashSet<String>> f : wordsOfFiles.entrySet()){
+            bagOfWords.addAll(f.getValue());
 //                wordsOfFiles.get(f);
-            }
-            System.out.println("Length of BagofWords: " + bagOfWords.size());
+        }
+        System.out.println("Length of BagofWords: " + bagOfWords.size());
 
+        try {
             PrWH = trainHamFreq(bagOfWords);
             PrWS = trainSpamFreq(bagOfWords);
-            HashMap<String,Float> PROBABILITYMAP = PrSW(PrWH,PrWS, bagOfWords);
-            System.out.println(PROBABILITYMAP);
-            // NEED MAP OF ALL SPAM/HAM TEST AS MAP<FILE,SET(BAGOFWORDS)> iterate it per word calcualting prob based on above
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
-            spamTestFilesMap = storeWords(allTestSpamFiles);
-            hamTestFilesMap = storeWords(allTestHamFiles);
+//        System.out.println(PROBABILITYMAP);
+        // NEED MAP OF ALL SPAM/HAM TEST AS MAP<FILE,SET(BAGOFWORDS)> iterate it per word calcualting prob based on above
+    }
+    public void initTable(){
+        PROBABILITYMAP.clear();
+        PROBABILITYMAP = PrSW(PrWH,PrWS, bagOfWords);
+        allTestHamFiles = new ArrayList<File>(Arrays.asList(getTestHamNames()));
+        allTestSpamFiles = new ArrayList<File>(Arrays.asList(getTestSpamNames()));
+
+        try {
+
+
             List<File> allTestFiles = new ArrayList<>(allTestSpamFiles);
             allTestFiles.addAll(allTestHamFiles);
             mapOfTestFiles = storeWords(allTestFiles);
@@ -86,18 +107,11 @@ public class Controller {
                         n = n + (float)(Math.log(1-PrSW) - Math.log(PrSW));
 
                     }
-//                    else if (PROBABILITYMAP.get(s) == null){
-//                        PrSW = (float)0.5;
-//                        n = n + (float)(Math.log(1-PrSW) - Math.log(PrSW));
-//
-//                    }
-
                 }
                 float PrSF = (float) (1/(1+Math.pow(Math.E,n)));
                 String parent = entry.getKey().getParent();
                 testFiles.add(new TestFile(entry.getKey().getName(),PrSF,parent.substring(parent.lastIndexOf("\\")+1)));
             }
-
             // TESTING
             System.out.println("------------TESTING-----------");
 
@@ -113,7 +127,8 @@ public class Controller {
 
         data.addAll(testFiles);
         table.setItems(data);
-
+        accuracyField.setText(Float.toString(this.accuracy));
+        precisionField.setText(Float.toString(this.precision));
         fileCol.setCellValueFactory(new PropertyValueFactory<TestFile,String>("Filename"));
         classCol.setCellValueFactory(new PropertyValueFactory<TestFile,String>("ActualClass"));
         probCol.setCellValueFactory(new PropertyValueFactory<TestFile,String>("SpamProbRounded"));
@@ -124,7 +139,7 @@ public class Controller {
         for(String s :words){
             if (!(wH.get(s) == 0 && wS.get(s) == 0)){
                 float val = wS.get(s)/(wH.get(s) + wS.get(s));
-                if((val > 0.01 && val < 0.27) || (val > 0.79 && val < 0.99)){ // put it in the proibability map,
+                if((val > 0.01 && val < this.lB) || (val > this.uB && val < 0.99)){ // put it in the proibability map,
                                                                     // only if it probably isnt spam, or if it is spam
                     prSW.put(s,val);
                 }
@@ -163,21 +178,21 @@ public class Controller {
     }
 
     private File [] getTrainSpamNames(){
-        File spamFiles = new File(".\\src\\sample\\data\\train\\spam\\");
+        File spamFiles = new File(this.mainDirectory.getAbsolutePath()+"\\train\\spam\\");
         return spamFiles.listFiles();
     }
     private File [] getTrainHamNames(){ // makes an array of ham files
-        File hamFiles = new File(".\\src\\sample\\data\\train\\ham\\");
+        File hamFiles = new File(this.mainDirectory.getAbsolutePath()+"\\train\\ham\\");
 
         return hamFiles.listFiles();
     }
     private File [] getTestSpamNames(){
-        File spamFiles = new File(".\\src\\sample\\data\\test\\spam\\");
+        File spamFiles = new File(this.mainDirectory.getAbsolutePath()+"\\test\\spam\\");
 
         return spamFiles.listFiles();
     }
     private File [] getTestHamNames(){ // makes an array of ham files
-        File hamFiles = new File(".\\src\\sample\\data\\test\\ham\\");
+        File hamFiles = new File(this.mainDirectory.getAbsolutePath()+"\\test\\ham\\");
 
         return hamFiles.listFiles();
     }
@@ -193,9 +208,8 @@ public class Controller {
                 BufferedReader buffer = new BufferedReader(fileReader);
                 String nextWord = null;
                 while ((nextWord = buffer.readLine()) != null) {
-//                    nextWord = nextWord.replaceAll("[^a-zA-Z]+", " ");
                     for (String s : nextWord.replaceAll("[^a-zA-Z ]", " ").toLowerCase().split("\\s+")) {
-                        if (s.length() > 2 && s.length() < 100) {
+                        if (s.length() > 0 && s.length() < 100) {
                             words.add(s);
                         }
                     }
@@ -257,5 +271,18 @@ public class Controller {
     }
 
 
+    public void clicked(javafx.event.ActionEvent actionEvent) {
+        try{
+            data.removeAll(data);
+            this.accuracy = 0;
+            this.precision = 0;
+            this.lB = Float.parseFloat(lowBoundField.getText());
+            this.uB = Float.parseFloat(upBoundField.getText());
+            initTable();
+            table.refresh();
 
+        }catch(Exception ex){
+            ex.getStackTrace();
+        }
+    }
 }

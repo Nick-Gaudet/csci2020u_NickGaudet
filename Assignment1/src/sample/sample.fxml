@@ -22,8 +22,8 @@
       <TableView fx:id="table" prefHeight="368.0" prefWidth="566.0">
         <columns>
           <TableColumn fx:id="fileCol" prefWidth="205.0" text="File Name" />
-            <TableColumn fx:id="classCol" prefWidth="178.0" text="Class" />
-            <TableColumn fx:id="probCol" prefWidth="182.0" text="Probability" />
+            <TableColumn fx:id="classCol" editable="false" prefWidth="178.0" text="Class" />
+            <TableColumn fx:id="probCol" editable="false" prefWidth="216.0" text="Probability" />
         </columns>
       </TableView>
       <Pane prefHeight="143.0" prefWidth="600.0" GridPane.rowIndex="1">

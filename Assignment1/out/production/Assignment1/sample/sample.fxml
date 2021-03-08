@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -23,13 +22,13 @@
       <TableView fx:id="table" prefHeight="368.0" prefWidth="566.0">
         <columns>
           <TableColumn fx:id="fileCol" prefWidth="205.0" text="File Name" />
-            <TableColumn fx:id="classCol" prefWidth="178.0" text="Class" />
-            <TableColumn fx:id="probCol" prefWidth="182.0" text="Probability" />
+            <TableColumn fx:id="classCol" editable="false" prefWidth="178.0" text="Class" />
+            <TableColumn fx:id="probCol" editable="false" prefWidth="216.0" text="Probability" />
         </columns>
       </TableView>
       <Pane prefHeight="143.0" prefWidth="600.0" GridPane.rowIndex="1">
          <children>
-            <Button layoutX="464.0" layoutY="88.0" mnemonicParsing="false" onAction="#clicked" text="Re-calculate" />
+            <Button layoutX="411.0" layoutY="89.0" mnemonicParsing="false" onAction="#clicked" text="Re-calculate" />
             <TextField fx:id="accuracyField" editable="false" layoutX="63.0" layoutY="24.0" prefHeight="25.0" prefWidth="107.0" />
             <TextField fx:id="precisionField" editable="false" layoutX="63.0" layoutY="76.0" prefHeight="25.0" prefWidth="107.0" />
             <Text layoutX="7.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Accuracy:" />
@@ -38,7 +37,6 @@
             <Text fx:id="lb" layoutX="211.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Low Bound Pr(S|W) (&lt;0.5):" />
             <Text fx:id="ub" layoutX="208.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Upper Bound Pr(S|W) (&gt;0.5):" />
             <TextField fx:id="upBoundField" layoutX="377.0" layoutY="55.0" />
-            <ProgressBar fx:id="progBar" layoutX="249.0" layoutY="92.0" prefWidth="200.0" progress="0.0" />
          </children>
       </Pane>
    </children>

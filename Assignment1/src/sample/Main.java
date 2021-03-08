@@ -23,20 +23,11 @@ public class Main extends Application {
         File mainDirectory = directoryChooser.showDialog(primaryStage);
         myCont.setMainDirectory(mainDirectory);
         myCont.training();
-        myCont.initTable();
+        myCont.testing();
 
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Bayesian Spam Detector");
         primaryStage.setScene(new Scene(root, 600, 500));
         primaryStage.show();
-
-//        try{
-//            System.out.println("TEST");
-//            System.out.println("Working Directory = " + System.getProperty("user.dir"));
-//
-//
-//        }catch(Exception e){
-//
-//        }
     }
 
 

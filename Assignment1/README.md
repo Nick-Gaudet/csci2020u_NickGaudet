@@ -22,6 +22,7 @@ and ham e-mails. The bag of words has all words mapped with a probability, signi
  <li>IDE: run the Main.java file</li>
  <li>Terminal: Go to class files directory of project, run <code>--module-path="../../javafx-sdk-11.0.1/lib/" --add-modules="javafx.web" --add-modules="javafx.controls" --add-modules="javafx.fxml" --add-modules="javafx.base -java Main.class"</code>
  in the terminal.</li>
+ <li>It will prompt for a directory, choose the <code>data</code> file in <code>src</code> directory. </li>
   </ul>
   
 <h2>References</h2>

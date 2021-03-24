@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Text?>
+
+<GridPane fx:id="root" alignment="center" hgap="10" maxHeight="800.0" prefHeight="800.0" prefWidth="600.0" vgap="10" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+    <columnConstraints>
+        <ColumnConstraints maxWidth="-Infinity" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints />
+      <RowConstraints maxHeight="24.5" minHeight="0.0" prefHeight="8.5" />
+      <RowConstraints maxHeight="643.5" minHeight="500.0" prefHeight="635.0" />
+      <RowConstraints maxHeight="600.0" minHeight="7.0" prefHeight="7.0" />
+        <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+      <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+      <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+      <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+      <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+      <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+      <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+      <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+      <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+    </rowConstraints>
+    <children>
+        <TableView fx:id="table" editable="true" prefHeight="686.0" prefWidth="600.0" GridPane.rowIndex="2">
+            <columns>
+                <TableColumn fx:id="sidCol" prefWidth="111.0" resizable="false" text="SID" />
+                <TableColumn fx:id="assignCol" prefWidth="100.0" resizable="false" text="Assignments" />
+                <TableColumn fx:id="midCol" prefWidth="96.0" resizable="false" text="Midterm" />
+                <TableColumn fx:id="examCol" prefWidth="98.0" resizable="false" text="Final Exam" />
+                <TableColumn fx:id="markCol" prefWidth="90.0" resizable="false" text="Final Mark" />
+                <TableColumn fx:id="gradeCol" prefWidth="104.0" resizable="false" text="Letter Grade" />
+            </columns>
+        </TableView>
+        <Pane prefHeight="200.0" prefWidth="600.0" GridPane.rowIndex="3">
+            <children>
+                <TextField fx:id="sidText" layoutX="82.0" layoutY="14.0" promptText="SID" />
+                <TextField fx:id="midText" layoutX="82.0" layoutY="52.0" promptText="Midterm/100" />
+                <TextField fx:id="assignText" layoutX="341.0" layoutY="14.0" promptText="Assignments/100" />
+                <TextField fx:id="finalText" layoutX="341.0" layoutY="52.0" promptText="Final Exam/100" />
+                <Button fx:id="addButton" layoutX="82.0" layoutY="89.0" mnemonicParsing="false" onAction="#clicked" text="Add" />
+                <Text layoutX="31.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SID:" />
+                <Text layoutX="17.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Midterm:" />
+                <Text layoutX="263.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Assignments:" />
+                <Text layoutX="266.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Final Exams:" />
+            </children>
+        </Pane>
+      <MenuBar prefHeight="15.0" prefWidth="591.0" GridPane.rowIndex="1">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem fx:id="newFile" mnemonicParsing="false" onAction="#newClicked" text="New" />
+                  <MenuItem fx:id="openFile" mnemonicParsing="false" onAction="#openClicked" text="Open" />
+                  <MenuItem fx:id="saveFile" mnemonicParsing="false" onAction="#saveClicked" text="Save" />
+                  <MenuItem fx:id="saveAsFile" mnemonicParsing="false" onAction="#saveAsClicked" text="Save As" />
+                  <MenuItem fx:id="exitFile" mnemonicParsing="false" onAction="#exitClicked" text="Exit" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+    </children>
+</GridPane>

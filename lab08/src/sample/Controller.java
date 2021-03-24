@@ -76,15 +76,11 @@ public class Controller {
         File CSV = new File(this.currentFileName);
         try{
             FileWriter writeCsv = new FileWriter(CSV);
-            writeCsv.append("SID,");
-            writeCsv.append("Midterm,");
-            writeCsv.append("Assignments,");
-            writeCsv.append("FinalExam\n");
+            writeCsv.append("SID,Midterm,Assignments,FinalExam\n");
 
             for (StudentRecord s : this.data){
                 writeCsv.append(s.getID() + "," + s.getMidterm()
-                        + "," + s.getAssignments() + "," + s.getFinalExam());
-                writeCsv.append("\n");
+                        + "," + s.getAssignments() + "," + s.getFinalExam() + "\n");
             }
             writeCsv.flush();
             writeCsv.close();

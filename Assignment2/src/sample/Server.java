@@ -7,12 +7,13 @@ import java.net.*;
 
 public class Server {
     public static void main(String [] args) throws IOException{
+        Inet4Address ip4 = (Inet4Address) Inet4Address.getLocalHost();
         InetAddress iAdd = InetAddress.getLocalHost();
         int port = 8080;
         ServerSocket ss = new ServerSocket();
-        SocketAddress eP = new InetSocketAddress(iAdd,port);
+        SocketAddress eP = new InetSocketAddress("0.0.0.0",port);
         ss.bind(eP);
-        System.out.println(iAdd);
+        System.out.println(ip4);
         while(true){
             Socket s = ss.accept();
             System.out.println("client connected!");

@@ -6,7 +6,7 @@ import java.net.Socket;
 
 public class Controller {
     public void initialize() throws IOException { // client
-        Socket s = new Socket("localhost", 4999);
+        Socket s = new Socket("localhost", 8080);
 
         PrintWriter p = new PrintWriter(s.getOutputStream());
         p.println("Hey its the client@@@");

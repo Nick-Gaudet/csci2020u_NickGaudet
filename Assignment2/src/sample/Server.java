@@ -13,20 +13,23 @@ public class Server {
         ServerSocket ss = new ServerSocket();
         SocketAddress eP = new InetSocketAddress("10.0.0.104",port);
         ss.bind(eP);
+        Socket s = ss.accept();
+        PrintWriter pW = new PrintWriter(s.getOutputStream());
+        InputStreamReader in = new InputStreamReader(s.getInputStream());
+        BufferedReader br = new BufferedReader(in);
 //        System.out.println(ep);
         while(true){
-            Socket s = ss.accept();
+
             System.out.println("client connected!");
-            InputStreamReader in = new InputStreamReader(s.getInputStream());
-            BufferedReader br = new BufferedReader(in);
+
             String str;
             while((str = br.readLine()) != null){
                 System.out.println(str);
-                PrintWriter pW = new PrintWriter(s.getOutputStream());
-                pW.println("Server" + ": "+scan.nextLine());
-                pW.flush();
-            }
 
+            }
+//            pW.println("Server" + ": "+scan.nextLine());
+//            pW.flush();
+//            pW.close();
 
 //            s.close();
         }

@@ -19,11 +19,9 @@ public class Controller {
             p.flush();
             InputStreamReader in = new InputStreamReader(s.getInputStream());
             BufferedReader br = new BufferedReader(in);
-            String str;
-            while((str = br.readLine()) != null){
-                System.out.println(str);
+            String str = br.readLine();
+            System.out.println(str);
 
-            }
         }
 
 //        System.out.println(scan.nextLine());

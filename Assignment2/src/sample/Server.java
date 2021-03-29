@@ -22,12 +22,12 @@ public class Server {
             String str;
             while((str = br.readLine()) != null){
                 System.out.println(str);
-
+                PrintWriter pW = new PrintWriter(s.getOutputStream());
+                pW.println("Server" + ": "+scan.nextLine());
+                pW.flush();
             }
 
-            PrintWriter pW = new PrintWriter(s.getOutputStream());
-            pW.println("Server" + ": "+scan.nextLine());
-            pW.flush();
+
 //            s.close();
         }
 

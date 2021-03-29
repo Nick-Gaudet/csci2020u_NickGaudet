@@ -23,7 +23,7 @@ public class Server {
                     new BufferedReader(
                             new InputStreamReader(System.in));
             String str;
-            while((str = stdIn.readLine()) != null){
+            while((str = br.readLine()) != null){
                 System.out.println(str);
 
             }

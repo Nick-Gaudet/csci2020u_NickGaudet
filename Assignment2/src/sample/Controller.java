@@ -14,8 +14,8 @@ public class Controller {
 
         PrintWriter p = new PrintWriter(s.getOutputStream());
         System.out.println("Chat: ");
-//        p.println(scan.nextLine());
-        System.out.println(scan.nextLine());
+        p.println(scan.nextLine());
+//        System.out.println(scan.nextLine());
 
 //        p.println("Hey this is client: " + ip.getHostAddress());
 

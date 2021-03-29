@@ -11,9 +11,9 @@ public class Server {
         InetAddress iAdd = InetAddress.getLocalHost();
         int port = 8080;
         ServerSocket ss = new ServerSocket();
-        SocketAddress eP = new InetSocketAddress("0.0.0.0",port);
+        SocketAddress eP = new InetSocketAddress("10.0.0.104",port);
         ss.bind(eP);
-        System.out.println(ip4);
+//        System.out.println(ep);
         while(true){
             Socket s = ss.accept();
             System.out.println("client connected!");

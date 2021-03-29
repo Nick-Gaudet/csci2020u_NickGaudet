@@ -13,13 +13,23 @@ public class Controller {
         Socket s = new Socket("10.0.0.104", 8080);
 
         PrintWriter p = new PrintWriter(s.getOutputStream());
-        System.out.println("Chat: ");
-        p.println(scan.nextLine());
+
+        while(true){
+            p.println(ip.getHostAddress() + ": "+scan.nextLine());
+            p.flush();
+            InputStreamReader in = new InputStreamReader(s.getInputStream());
+            BufferedReader br = new BufferedReader(in);
+            String str;
+            while((str = br.readLine()) != null){
+                System.out.println(str);
+
+            }
+        }
+
 //        System.out.println(scan.nextLine());
 
 //        p.println("Hey this is client: " + ip.getHostAddress());
 
-        p.flush();
 
 
 

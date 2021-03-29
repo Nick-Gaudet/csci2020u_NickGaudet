@@ -1,12 +1,12 @@
 package sample;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.*;
+import java.util.Scanner;
 
 public class Server {
     public static void main(String [] args) throws IOException{
+        Scanner scan = new Scanner(System.in);
         Inet4Address ip4 = (Inet4Address) Inet4Address.getLocalHost();
         InetAddress iAdd = InetAddress.getLocalHost();
         int port = 8080;
@@ -19,14 +19,15 @@ public class Server {
             System.out.println("client connected!");
             InputStreamReader in = new InputStreamReader(s.getInputStream());
             BufferedReader br = new BufferedReader(in);
-            BufferedReader stdIn =
-                    new BufferedReader(
-                            new InputStreamReader(System.in));
             String str;
             while((str = br.readLine()) != null){
                 System.out.println(str);
 
             }
+
+            PrintWriter pW = new PrintWriter(s.getOutputStream());
+            pW.println("Server" + ": "+scan.nextLine());
+            pW.flush();
 //            s.close();
         }
 

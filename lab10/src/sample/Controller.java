@@ -16,7 +16,7 @@ public class Controller {
     public TextField msgText;
 
     public void sendClicked(ActionEvent actionEvent) throws IOException {
-        String hostName = "10.0.0.104";
+        String hostName = "localhost";
         int port = 8080;
         Socket s = new Socket(hostName,port);
 

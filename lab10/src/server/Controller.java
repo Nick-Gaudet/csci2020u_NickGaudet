@@ -15,7 +15,7 @@ public class Controller {
     public TextArea chatBox;
 
     public void runServer() throws IOException{
-        String hostName = "10.0.0.104";
+        String hostName = "localhost";
         int port = 8080;
         ServerSocket ss = new ServerSocket();
         SocketAddress sA = new InetSocketAddress(hostName, port);
@@ -32,13 +32,12 @@ public class Controller {
                 DataInputStream in = new DataInputStream(s.getInputStream());
                 DataOutputStream out = new DataOutputStream(s.getOutputStream());
                 ClientConnectionHandler cHand = new ClientConnectionHandler(s, in, out);
-                cHand.setChatBox(chatBox);
                 Thread t = cHand;
-                t.start();
+                cHand.setChatBox(chatBox);
                 chatBox = cHand.getChatBox();
-
-
+                t.start();
                 break;
+
 
             } catch (Exception e) {
                 s.close();
@@ -74,13 +73,23 @@ class ClientConnectionHandler extends Thread{
     public void run() {
         try{
             while(true){
+                if(in.available() == -1){
+                    break;
+                }
                 String[] str = in.readUTF().split("//");
 
                 this.chatBox.appendText(str[0] + " : " + str[1]);
+                this.s.close();
                 break;
 
 
             }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        try{
+            this.in.close();
+            this.out.close();
         }catch(Exception e){
             e.printStackTrace();
         }

@@ -29,6 +29,9 @@ public class Controller {
     private String toBeUploaded;
     private String toBeDownloaded;
 
+    private String hostName = "10.0.0.104";
+    private int port = 8080;
+
     public void initialize() throws IOException { // client
         File [] files = new File[4];
         File dir = new File("./src/sample/shared");
@@ -51,7 +54,7 @@ public class Controller {
 
     }
     public void dir() throws IOException{ // sends list of server folder contents to client
-        Socket s = new Socket("localhost", 8080);
+        Socket s = new Socket(hostName, port);
         try{
             DataInputStream in = new DataInputStream(s.getInputStream());
             DataOutputStream out = new DataOutputStream(s.getOutputStream());
@@ -78,7 +81,7 @@ public class Controller {
         InetAddress ip =  InetAddress.getLocalHost();
 
         Scanner scan = new Scanner(System.in);
-        Socket s = new Socket("localhost", 8080);
+        Socket s = new Socket(hostName, port);
 
         DataInputStream in = new DataInputStream(s.getInputStream());
         DataOutputStream out = new DataOutputStream(s.getOutputStream());
@@ -99,7 +102,7 @@ public class Controller {
     public void download(ActionEvent actionEvent) throws IOException{
 
         this.toBeDownloaded = serverDir.getSelectionModel().getSelectedItem().toString();
-        Socket s = new Socket("localhost", 8080);
+        Socket s = new Socket(hostName, port);
         DataInputStream in = new DataInputStream(s.getInputStream());
         DataOutputStream out = new DataOutputStream(s.getOutputStream());
         out.writeUTF("download " + this.toBeDownloaded);

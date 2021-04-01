@@ -6,17 +6,16 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Server {
-    private String hostName;
-    private int port;
+
 
     public static void main(String [] args) throws IOException{
-
+        String hostName = "10.0.0.104";
+        int port = 8080;
         Scanner scan = new Scanner(System.in);
         Inet4Address ip4 = (Inet4Address) Inet4Address.getLocalHost();
         InetAddress iAdd = InetAddress.getLocalHost();
-        int port = 8080;
         ServerSocket ss = new ServerSocket();
-        SocketAddress eP = new InetSocketAddress("localhost",port);
+        SocketAddress eP = new InetSocketAddress(hostName,port);
         ss.bind(eP);
 
         while(true){

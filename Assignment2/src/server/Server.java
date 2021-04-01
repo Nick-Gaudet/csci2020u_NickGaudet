@@ -1,4 +1,4 @@
-package sample;
+package server;
 
 import java.io.*;
 import java.net.*;
@@ -10,6 +10,7 @@ public class Server {
     private int port;
 
     public static void main(String [] args) throws IOException{
+
         Scanner scan = new Scanner(System.in);
         Inet4Address ip4 = (Inet4Address) Inet4Address.getLocalHost();
         InetAddress iAdd = InetAddress.getLocalHost();
@@ -17,14 +18,9 @@ public class Server {
         ServerSocket ss = new ServerSocket();
         SocketAddress eP = new InetSocketAddress("localhost",port);
         ss.bind(eP);
-//        PrintWriter pW = new PrintWriter(s.getOutputStream());
-//        InputStreamReader in = new InputStreamReader(s.getInputStream());
-//        BufferedReader br = new BufferedReader(in);
-//        System.out.println(ep);
+
         while(true){
             Socket s = null;
-
-//            System.out.println(s.isConnected());
             try{
                 s = ss.accept();
 
@@ -40,24 +36,12 @@ public class Server {
                 s.close();
                 e.printStackTrace();
             }
-//            String str;
-//            while((str = br.readLine()) != null){
-//                System.out.println(str);
-//
-//            }
-//
-//            s.close();
-//            s.close();
-//            pW.println("Server" + ": "+scan.nextLine());
-//            pW.flush();
-//            pW.close();
-
-//            s.close();
         }
 
 
     }
 }
+
 class ClientConnectionHandler extends Thread{
     final Socket s;
     final DataInputStream in;
@@ -71,8 +55,35 @@ class ClientConnectionHandler extends Thread{
     @Override
     public void run() {
         while(true){
+            File dir = new File("./src/server/shared");
+
             try{
                 String str = in.readUTF();
+                if(str.split(" ")[0].equalsIgnoreCase("download")){
+                    File f = new File(dir, str.split(" ")[1]);
+                    BufferedReader br = new BufferedReader(new FileReader(f));
+                    DataOutputStream out = new DataOutputStream(s.getOutputStream());
+
+                    String line;
+                    String toOutput = "";
+                    while ((line = br.readLine()) != null){
+                        toOutput += line + "\n";
+                    }
+                    out.writeUTF(toOutput);
+
+                    this.s.close();
+                    break;
+                }
+                if(str.equalsIgnoreCase("dir")){
+                    String toSend = "";
+                    for(File f : dir.listFiles()){
+                        toSend = toSend + f.getName() + " ";
+                    }
+                    out.writeUTF(toSend);
+
+                    this.s.close();
+                    break;
+                }
 
                 if(Arrays.asList(str.split(" ")).contains("exit") || str == null){
                     System.out.println("Client Connection closing...");

@@ -16,7 +16,7 @@ public class Controller {
     public TextField msgText;
 
     public void sendClicked(ActionEvent actionEvent) throws IOException {
-        String hostName = "localhost";
+        String hostName = "10.0.0.104";
         int port = 8080;
         Socket s = new Socket(hostName,port);
 
@@ -24,6 +24,7 @@ public class Controller {
             DataOutputStream out = new DataOutputStream(s.getOutputStream());
             String toSend = userNameText.getText() + "//" + msgText.getText();
             out.writeUTF(toSend);
+            out.flush();
             s.close();
 
         }catch(Exception e){

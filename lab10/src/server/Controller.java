@@ -15,35 +15,46 @@ public class Controller {
     public TextArea chatBox;
 
     public void runServer() throws IOException{
-        String hostName = "localhost";
-        int port = 8080;
-        ServerSocket ss = new ServerSocket();
-        SocketAddress sA = new InetSocketAddress(hostName, port);
-        System.out.println(ss.isBound());
-        ss.bind(sA);
-        System.out.println(ss.isBound());
-
-        while (true) {
-            Socket s = null;
+        new Thread(() ->{
             try {
-                s = ss.accept();
-                System.out.println("Client : " + s.getInetAddress());
+                String hostName = "10.0.0.104";
+                int port = 8080;
 
-                DataInputStream in = new DataInputStream(s.getInputStream());
-                DataOutputStream out = new DataOutputStream(s.getOutputStream());
-                ClientConnectionHandler cHand = new ClientConnectionHandler(s, in, out);
-                Thread t = cHand;
-                cHand.setChatBox(chatBox);
-                chatBox = cHand.getChatBox();
-                t.start();
-                break;
+                ServerSocket ss = new ServerSocket();
+                SocketAddress sA = new InetSocketAddress(hostName, port);
+                System.out.println(ss.isBound());
+                ss.bind(sA);
+                System.out.println(ss.isBound());
+
+                while (true) {
+                    Socket s = null;
+                    try {
+                        s = ss.accept();
+                        System.out.println("Client : " + s.getInetAddress());
+
+                        DataInputStream in = new DataInputStream(s.getInputStream());
+                        DataOutputStream out = new DataOutputStream(s.getOutputStream());
+                        ClientConnectionHandler cHand = new ClientConnectionHandler(s, in, out);
+                        Thread t = cHand;
+                        cHand.setChatBox(chatBox);
+                        t.start();
+                        chatBox = cHand.getChatBox();
+
+                        System.out.println(t.getState());
+//                        break;
 
 
-            } catch (Exception e) {
-                s.close();
+                    } catch (Exception e) {
+                        s.close();
+                        e.printStackTrace();
+                    }
+                }
+            }catch (Exception e){
                 e.printStackTrace();
             }
-        }
+
+        }).start();
+
     }
     public void initialize() throws IOException {
 
@@ -78,7 +89,7 @@ class ClientConnectionHandler extends Thread{
                 }
                 String[] str = in.readUTF().split("//");
 
-                this.chatBox.appendText(str[0] + " : " + str[1]);
+                this.chatBox.appendText(str[0] + " : " + str[1] + "\n");
                 this.s.close();
                 break;
 

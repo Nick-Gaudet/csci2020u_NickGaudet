@@ -66,6 +66,9 @@ class ClientConnectionHandler extends Thread{
                 if(str.split(" ")[0].equalsIgnoreCase("upload")){ // if upload, make a new file
                                                                                 // copy contents from client to new file
                     File f = new File(dir, str.split(" ")[1]);
+                    if(!f.exists()){
+                        f.createNewFile();
+                    }
                     BufferedWriter bw = new BufferedWriter(new FileWriter(f));
                     bw.write(in.readUTF());
                     bw.close();
@@ -76,6 +79,9 @@ class ClientConnectionHandler extends Thread{
                 //Server recieves download from client
                 if(str.split(" ")[0].equalsIgnoreCase("download")){// if download, send file data
                     File f = new File(dir, str.split(" ")[1]);
+                    if(!f.exists()){
+                        f.createNewFile();
+                    }
                     BufferedReader br = new BufferedReader(new FileReader(f));
                     DataOutputStream out = new DataOutputStream(s.getOutputStream());
 

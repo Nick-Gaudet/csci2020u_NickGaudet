@@ -18,7 +18,7 @@ public class Main extends Application {
         System.out.println("Enter hostname of server machine(Either 'localhost' or server ipv4): ");
         String s = scan.nextLine();
         Controller c = new Controller();
-        c.setHostName(s);
+        c.setHostName("10.0.0.104");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
         Parent root = loader.load();
         loader.setController(c);

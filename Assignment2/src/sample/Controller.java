@@ -29,7 +29,6 @@ public class Controller {
     private String hostName;
     private int port = 8080;
 
-
     public void setHostName(String s){
         this.hostName = s;
     }

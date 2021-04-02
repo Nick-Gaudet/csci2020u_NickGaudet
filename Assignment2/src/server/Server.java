@@ -12,10 +12,11 @@ public class Server {
         Scanner scan = new Scanner(System.in);
         System.out.println("Server started...\nEnter hostname ('localhost' or ipv4 address): ");
         String hostName = scan.nextLine();
+        System.out.println(hostName);
         int port = 8080;
-        ServerSocket ss = new ServerSocket();
-        SocketAddress eP = new InetSocketAddress(hostName,port);
-        ss.bind(eP);
+        ServerSocket ss = new ServerSocket(8080,100,InetAddress.getByName("0.0.0.0"));
+//        SocketAddress eP = new InetSocketAddress("hostName",port);
+//        ss.bind(eP);
 
         while(true){ // waits for client connections
             Socket s = null;
@@ -31,7 +32,7 @@ public class Server {
 
                 t.start();
             }catch(Exception e){
-                s.close();
+//                s.close();
                 e.printStackTrace();
             }
         }

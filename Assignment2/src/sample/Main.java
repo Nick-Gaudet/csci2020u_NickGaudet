@@ -6,11 +6,24 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.Scanner;
+
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Scanner scan = new Scanner(System.in);
+
+        //ask user to enter server address before launching client application
+        Controller c = new Controller();
+        System.out.println("Enter hostname of server machine(Either 'localhost' or server ipv4): ");
+        String s = scan.nextLine();
+        c.setHostName(s);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
+        Parent root = loader.load();
+        loader.setController(c);
+
+//        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Hello World");
         Scene scene = new Scene(root, 450, 600);
         scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());

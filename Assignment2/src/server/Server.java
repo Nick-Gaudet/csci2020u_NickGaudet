@@ -9,26 +9,25 @@ public class Server {
 
 
     public static void main(String [] args) throws IOException{
-        String hostName = "10.0.0.104";
-        int port = 8080;
         Scanner scan = new Scanner(System.in);
-        Inet4Address ip4 = (Inet4Address) Inet4Address.getLocalHost();
-        InetAddress iAdd = InetAddress.getLocalHost();
+        System.out.println("Server started...\nEnter hostname ('localhost' or ipv4 address): ");
+        String hostName = scan.nextLine();
+        int port = 8080;
         ServerSocket ss = new ServerSocket();
         SocketAddress eP = new InetSocketAddress(hostName,port);
         ss.bind(eP);
 
-        while(true){
+        while(true){ // waits for client connections
             Socket s = null;
             try{
-                s = ss.accept();
+                s = ss.accept(); // accepts a client
 
                 System.out.println("A new client has connected: " + s.getInetAddress());
 
                 DataInputStream in = new DataInputStream(s.getInputStream());
                 DataOutputStream out = new DataOutputStream(s.getOutputStream());
 
-                Thread t = new ClientConnectionHandler(s,in,out);
+                Thread t = new ClientConnectionHandler(s,in,out); // handle the client on a seperate thread
 
                 t.start();
             }catch(Exception e){
@@ -45,6 +44,7 @@ class ClientConnectionHandler extends Thread{
     final Socket s;
     final DataInputStream in;
     final DataOutputStream out;
+    File dir = new File("./src/server/shared");
     public ClientConnectionHandler(Socket s, DataInputStream in, DataOutputStream out){
         this.s = s;
         this.in = in;
@@ -53,12 +53,25 @@ class ClientConnectionHandler extends Thread{
 
     @Override
     public void run() {
-        while(true){
-            File dir = new File("./src/server/shared");
+        while(true){ // while listenting for client commands ; breaks after each command has concluded
 
             try{
-                String str = in.readUTF();
-                if(str.split(" ")[0].equalsIgnoreCase("download")){
+                String str = in.readUTF(); // store the commands recieved
+
+
+                // server recieves upload from client
+                if(str.split(" ")[0].equalsIgnoreCase("upload")){ // if upload, make a new file
+                                                                                // copy contents from client to new file
+                    File f = new File(dir, str.split(" ")[1]);
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(f));
+                    bw.write(in.readUTF());
+                    bw.close();
+                    this.s.close();
+                    break;
+                }
+
+                //Server recieves download from client
+                if(str.split(" ")[0].equalsIgnoreCase("download")){// if download, send file data
                     File f = new File(dir, str.split(" ")[1]);
                     BufferedReader br = new BufferedReader(new FileReader(f));
                     DataOutputStream out = new DataOutputStream(s.getOutputStream());
@@ -73,22 +86,19 @@ class ClientConnectionHandler extends Thread{
                     this.s.close();
                     break;
                 }
+
+                // server recieves dir from client
                 if(str.equalsIgnoreCase("dir")){
                     String toSend = "";
-                    for(File f : dir.listFiles()){
+                    for(File f : dir.listFiles()){ // loop through server folder of files
                         toSend = toSend + f.getName() + " ";
                     }
-                    out.writeUTF(toSend);
+                    out.writeUTF(toSend); // send it to client via string
 
                     this.s.close();
                     break;
                 }
 
-                if(Arrays.asList(str.split(" ")).contains("exit") || str == null){
-                    System.out.println("Client Connection closing...");
-                    this.s.close();
-                    break;
-                }
                 System.out.println(str);
 
                 this.s.close();

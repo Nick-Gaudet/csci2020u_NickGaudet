@@ -15,19 +15,21 @@
       <ColumnConstraints />
    </columnConstraints>
    <rowConstraints>
-      <RowConstraints />
-      <RowConstraints />
+      <RowConstraints maxHeight="29.0" minHeight="13.0" prefHeight="27.0" />
+      <RowConstraints maxHeight="557.0" minHeight="541.0" prefHeight="543.0" />
       <RowConstraints />
       <RowConstraints />
    </rowConstraints>
    <children>
-      <HBox prefHeight="75.0" prefWidth="400.0">
+      <HBox prefHeight="30.0" prefWidth="400.0">
          <children>
-            <Button fx:id="upButton" mnemonicParsing="false" onAction="#upload" prefHeight="54.0" prefWidth="83.0" text="Upload" />
-            <Button fx:id="downButton" mnemonicParsing="false" onAction="#download" prefHeight="44.0" prefWidth="83.0" text="Download" />
+            <Button fx:id="upButton" mnemonicParsing="false" onAction="#upload" prefHeight="27.0" prefWidth="146.0" text="Upload" />
+            <Button fx:id="downButton" mnemonicParsing="false" onAction="#download" prefHeight="27.0" prefWidth="149.0" text="Download" />
+            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#delete" prefHeight="27.0" prefWidth="138.0" text="Delete" />
+            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exit" prefHeight="27.0" prefWidth="151.0" text="Exit" />
          </children>
       </HBox>
-      <SplitPane dividerPositions="0.5" prefHeight="662.0" prefWidth="400.0" GridPane.rowIndex="1">
+      <SplitPane dividerPositions="0.5" prefHeight="540.0" prefWidth="400.0" GridPane.rowIndex="1">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>

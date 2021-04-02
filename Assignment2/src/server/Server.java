@@ -11,13 +11,13 @@ public class Server {
     public static void main(String [] args) throws IOException{
         Scanner scan = new Scanner(System.in);
         System.out.println("Server started...\nEnter hostname ('localhost' or ipv4 address): ");
-        String hostName = scan.nextLine();
+        String hostName = "10.0.0.150";
         String serverIP = String.valueOf(InetAddress.getLocalHost().getHostAddress());
 
         System.out.println(InetAddress.getLocalHost());
         int port = 8080;
         ServerSocket ss = new ServerSocket();
-        SocketAddress eP = new InetSocketAddress("localhost",port);
+        SocketAddress eP = new InetSocketAddress(hostName,port);
         ss.bind(eP);
 
         while(true){ // waits for client connections

@@ -26,7 +26,7 @@ public class Controller {
     private String toBeDownloaded;
     private File dir = new File("./src/sample/shared");
     private File [] filesInFolder = dir.listFiles();
-    private String hostName = "localhost";
+    private String hostName = "10.0.0.150";
     private int port = 8080;
 
     public void setHostName(String s){

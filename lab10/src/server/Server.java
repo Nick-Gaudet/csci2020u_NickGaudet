@@ -1,13 +1,7 @@
 package server;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.SocketAddress;
 
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -19,11 +13,10 @@ public class Server extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-//        FXMLLoader fxmlLoad = new FXMLLoader(getClass().getResource("server.fxml"));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("server.fxml"));
         Parent root = loader.load();
         Controller c = (Controller) (loader.getController());
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Lab10 Server");
         Scene scene = new Scene(root,500,300);
         scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
         primaryStage.setScene(scene);
@@ -39,11 +32,6 @@ public class Server extends Application{
 
             }
         });
-        System.out.println("reached");
-
-
-
-
     }
 
 }

@@ -2,7 +2,6 @@ package server;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.TextArea;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -17,7 +16,7 @@ public class Controller {
     public void runServer() throws IOException{
         new Thread(() ->{
             try {
-                String hostName = "10.0.0.104";
+                String hostName = "localhost";
                 int port = 8080;
 
                 ServerSocket ss = new ServerSocket();
@@ -40,8 +39,6 @@ public class Controller {
                         t.start();
                         chatBox = cHand.getChatBox();
 
-                        System.out.println(t.getState());
-//                        break;
 
 
                     } catch (Exception e) {
@@ -56,11 +53,10 @@ public class Controller {
         }).start();
 
     }
-    public void initialize() throws IOException {
 
-    }
 
     public void exitClicked(ActionEvent actionEvent) {
+        System.exit(-1);
     }
 }
 class ClientConnectionHandler extends Thread{

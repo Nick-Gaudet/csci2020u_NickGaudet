@@ -17,7 +17,7 @@ public class Server {
         System.out.println(InetAddress.getLocalHost());
         int port = 8080;
         ServerSocket ss = new ServerSocket();
-        SocketAddress eP = new InetSocketAddress("10.0.0.104",port);
+        SocketAddress eP = new InetSocketAddress("localhost",port);
         ss.bind(eP);
 
         while(true){ // waits for client connections
@@ -47,7 +47,7 @@ class ClientConnectionHandler extends Thread{
     final Socket s;
     final DataInputStream in;
     final DataOutputStream out;
-    File dir = new File(".\\src\\server\\shared");
+    File dir = new File("./src/server/shared");
     public ClientConnectionHandler(Socket s, DataInputStream in, DataOutputStream out){
         this.s = s;
         this.in = in;

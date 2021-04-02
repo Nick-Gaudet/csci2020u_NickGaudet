@@ -24,9 +24,9 @@ public class Controller {
     //fields
     private String toBeUploaded;
     private String toBeDownloaded;
-    private File dir = new File(".\\src\\sample\\shared");
+    private File dir = new File("./src/sample/shared");
     private File [] filesInFolder = dir.listFiles();
-    private String hostName = "10.0.0.104";
+    private String hostName = "localhost";
     private int port = 8080;
 
     public void setHostName(String s){
@@ -48,7 +48,6 @@ public class Controller {
         return false;
     }
     public void initialize() throws IOException { // client
-
         setClientData();
         dir();
         serverDir.setItems(serverData);

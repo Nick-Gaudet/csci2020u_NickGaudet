@@ -15,9 +15,9 @@ public class Main extends Application {
         Scanner scan = new Scanner(System.in);
 
         //ask user to enter server address before launching client application
-        Controller c = new Controller();
         System.out.println("Enter hostname of server machine(Either 'localhost' or server ipv4): ");
         String s = scan.nextLine();
+        Controller c = new Controller();
         c.setHostName(s);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
         Parent root = loader.load();

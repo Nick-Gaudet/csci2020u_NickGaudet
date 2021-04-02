@@ -65,11 +65,11 @@ public class Controller {
 
             while(true){ // send command to server
                 out.writeUTF("dir");
-                out.close();
                 break;
             }
             System.out.println("Awaiting server response...");
             while(true){ // read in files of server folder
+
                 serverData.addAll(in.readUTF().split(" "));
                 s.close();
                 in.close();

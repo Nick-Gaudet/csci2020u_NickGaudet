@@ -24,7 +24,7 @@ public class Controller {
     //fields
     private String toBeUploaded;
     private String toBeDownloaded;
-    private File dir = new File("./src/sample/shared");
+    private File dir = new File(".\\src\\sample\\shared");
     private File [] filesInFolder = dir.listFiles();
     private String hostName = "10.0.0.104";
     private int port = 8080;

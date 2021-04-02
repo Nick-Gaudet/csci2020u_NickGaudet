@@ -47,7 +47,7 @@ class ClientConnectionHandler extends Thread{
     final Socket s;
     final DataInputStream in;
     final DataOutputStream out;
-    File dir = new File("./src/server/shared");
+    File dir = new File(".\\src\\server\\shared");
     public ClientConnectionHandler(Socket s, DataInputStream in, DataOutputStream out){
         this.s = s;
         this.in = in;

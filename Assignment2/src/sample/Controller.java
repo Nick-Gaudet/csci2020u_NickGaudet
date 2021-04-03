@@ -122,7 +122,7 @@ public class Controller {
             Socket s = new Socket(hostName, port);
             DataInputStream in = new DataInputStream(s.getInputStream());
             DataOutputStream out = new DataOutputStream(s.getOutputStream());
-            out.writeUTF("download " + this.toBeDownloaded); // send server command
+            out.writeUTF("download"+split + this.toBeDownloaded); // send server command
 
             while(true){ // while listening to server
                 try{

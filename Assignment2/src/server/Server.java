@@ -76,6 +76,7 @@ class ClientConnectionHandler extends Thread{
                             }
                             BufferedWriter bw = new BufferedWriter(new FileWriter(f));
                             bw.write(str.split(splitter)[2]);
+                            bw.flush();
                             bw.close();
                         }catch(Exception e){
                             e.printStackTrace();
@@ -102,6 +103,7 @@ class ClientConnectionHandler extends Thread{
                         toOutput += line + "\n";
                     }
                     out.writeUTF(toOutput);
+                    out.flush();
 
                     this.s.close();
                     break;
@@ -114,7 +116,6 @@ class ClientConnectionHandler extends Thread{
                         toSend = toSend + f.getName() + " ";
                     }
                     out.writeUTF(toSend); // send it to client via string
-
                     this.s.close();
                     break;
                 }

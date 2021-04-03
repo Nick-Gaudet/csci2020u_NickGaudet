@@ -27,8 +27,8 @@ public class Controller {
     private File dir = new File("./src/sample/shared");
     private File [] filesInFolder = dir.listFiles();
     private String hostName = "10.0.0.150";
-    private int port = 8080;
-
+    private int port = 8081;
+    private String split = "<>";
     public void setHostName(String s){
         this.hostName = s;
     }
@@ -81,23 +81,23 @@ public class Controller {
 
     }
     public void upload(ActionEvent actionEvent) throws IOException{ // user wants to upload file
+        String toSend = "";
         Socket s = new Socket(hostName, port);
         DataOutputStream out = new DataOutputStream(s.getOutputStream());
 
         if(clientDir.getSelectionModel().getSelectedItem() != null){ // if the user has selected and item to upload
             this.toBeUploaded = clientDir.getSelectionModel().getSelectedItem().toString(); // file (client -> server folder)
-            out.writeUTF("upload " + this.toBeUploaded + "\n"); // send server command
-
+            toSend += "upload" + split + this.toBeUploaded + split;
             while(true){ // wait for response
                 try{
 
                     //read in the file to be sent to server
                     BufferedReader br = new BufferedReader(new FileReader(new File(this.dir,this.toBeUploaded)));
-                    String toSend = "";
                     String line;
                     while((line = br.readLine()) != null){ // read in file and store contents into string
                         toSend += line + "\n";
                     }
+                    System.out.println(toSend);
                     out.writeUTF(toSend); // send the file data to server
                     s.close();
                     break;

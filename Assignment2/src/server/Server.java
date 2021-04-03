@@ -15,7 +15,7 @@ public class Server {
         String serverIP = String.valueOf(InetAddress.getLocalHost().getHostAddress());
 
         System.out.println(InetAddress.getLocalHost());
-        int port = 8080;
+        int port = 8081;
         ServerSocket ss = new ServerSocket();
         SocketAddress eP = new InetSocketAddress(hostName,port);
         ss.bind(eP);
@@ -48,6 +48,7 @@ class ClientConnectionHandler extends Thread{
     final DataInputStream in;
     final DataOutputStream out;
     File dir = new File("./src/server/shared");
+    private String splitter = "<>";
     public ClientConnectionHandler(Socket s, DataInputStream in, DataOutputStream out){
         this.s = s;
         this.in = in;
@@ -60,25 +61,26 @@ class ClientConnectionHandler extends Thread{
 
             try{
                 String str = in.readUTF(); // store the commands recieved
-
+                String [] words = str.split(splitter);
+                System.out.println(Arrays.toString(words));
 
                 // server recieves upload from client
-                if(str.split(" ")[0].equalsIgnoreCase("upload")){ // if upload, make a new file
+                if(str.split(splitter)[0].equalsIgnoreCase("upload")){ // if upload, make a new file
                                                                                 // copy contents from client to new file
-                    File f = new File(dir, str.split(" ")[1]);
+                    File f = new File(dir, str.split(splitter)[1]);
                     if(!f.exists()){
                         f.createNewFile();
                     }
                     BufferedWriter bw = new BufferedWriter(new FileWriter(f));
-                    bw.write(in.readUTF());
+                    bw.write(str.split(splitter)[2]);
                     bw.close();
                     this.s.close();
                     break;
                 }
 
                 //Server recieves download from client
-                if(str.split(" ")[0].equalsIgnoreCase("download")){// if download, send file data
-                    File f = new File(dir, str.split(" ")[1]);
+                if(str.split(splitter)[0].equalsIgnoreCase("download")){// if download, send file data
+                    File f = new File(dir, str.split(splitter)[1]);
                     if(!f.exists()){
                         f.createNewFile();
                     }

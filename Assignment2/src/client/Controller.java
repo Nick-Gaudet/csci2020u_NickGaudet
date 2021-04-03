@@ -1,4 +1,4 @@
-package sample;
+package client;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,7 +8,6 @@ import java.io.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class Controller {
     public Button downButton;
@@ -24,17 +23,13 @@ public class Controller {
     //fields
     private String toBeUploaded;
     private String toBeDownloaded;
-    private File dir = new File("./src/sample/shared");
+    private File dir = new File("./src/client/shared");
     private File [] filesInFolder = dir.listFiles();
-    private String hostName = "10.0.0.150";
+    private String hostName = "localhost"; // set as default local host -> change to IPV4
     private int port = 8081;
     private String split = "<>";
 
 
-    public void setHostName(String s){
-
-        this.hostName = s;
-    }
     public File [] getFilesInFolder(){
 
         return this.filesInFolder;
@@ -153,6 +148,8 @@ public class Controller {
         if(clientDir.getSelectionModel().getSelectedItem() != null){ // if user wants to delete file locally
             String fileName  = clientDir.getSelectionModel().getSelectedItem().toString();
             File f = new File(dir, fileName);
+
+            //delete the file & refresh the list
             f.delete();
             clientData.remove(fileName);
             clientDir.refresh();

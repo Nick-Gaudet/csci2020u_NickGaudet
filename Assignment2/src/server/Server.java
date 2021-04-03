@@ -9,8 +9,8 @@ public class Server {
 
 
     public static void main(String [] args) throws IOException{
-        System.out.println("Server started...\nEnter hostname ('localhost' or ipv4 address): ");
-        String hostName = "10.0.0.150";
+        System.out.println("Server started...");
+        String hostName = "10.0.0.150"; // set as default local host -> change to IPV4
 
         System.out.println(InetAddress.getLocalHost());
         int port = 8081;
@@ -40,7 +40,7 @@ public class Server {
     }
 }
 
-class ClientConnectionHandler extends Thread{
+class ClientConnectionHandler extends Thread{ // handles incoming clients creates a new thread each connection
     final Socket s;
     final DataInputStream in;
     final DataOutputStream out;
@@ -96,10 +96,10 @@ class ClientConnectionHandler extends Thread{
 
                     String line;
                     String toOutput = "";
-                    while ((line = br.readLine()) != null){
+                    while ((line = br.readLine()) != null){ // read file, store in string to send to client
                         toOutput += line + "\n";
                     }
-                    out.writeUTF(toOutput);
+                    out.writeUTF(toOutput); // send file contents to client
                     out.flush();
 
                     this.s.close();

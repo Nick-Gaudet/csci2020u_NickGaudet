@@ -1,4 +1,4 @@
-package sample;
+package client;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -6,8 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main extends Application {
@@ -17,8 +15,7 @@ public class Main extends Application {
         Scanner scan = new Scanner(System.in);
 
         //ask user to enter server address before launching client application
-        System.out.println("Enter hostname of server machine(Either 'localhost' or server ipv4): ");
-        String s = scan.nextLine();
+        System.out.println("Launching Client...");
         Controller c = new Controller();
         c.setHostName("10.0.0.104");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));

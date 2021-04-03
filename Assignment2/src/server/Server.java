@@ -67,22 +67,14 @@ class ClientConnectionHandler extends Thread{
                 // server recieves upload from client
                 if(str.split(splitter)[0].equalsIgnoreCase("upload")){ // if upload, make a new file
                                                                                 // copy contents from client to new file
-
-                    new Thread (() ->{
-                        try{
-                            File f = new File(dir, str.split(splitter)[1]);
-                            if(!f.exists()){
-                                f.createNewFile();
-                            }
-                            BufferedWriter bw = new BufferedWriter(new FileWriter(f));
-                            bw.write(str.split(splitter)[2]);
-                            bw.flush();
-                            bw.close();
-                        }catch(Exception e){
-                            e.printStackTrace();
-                        }
-
-                    }).start();
+                    File f = new File(dir, str.split(splitter)[1]);
+                    if(!f.exists()){
+                        f.createNewFile();
+                    }
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(f));
+                    bw.write(str.split(splitter)[2]);
+                    bw.flush();
+                    bw.close();
 
                     this.s.close();
                     break;

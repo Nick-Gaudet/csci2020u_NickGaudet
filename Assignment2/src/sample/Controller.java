@@ -26,13 +26,17 @@ public class Controller {
     private String toBeDownloaded;
     private File dir = new File("./src/sample/shared");
     private File [] filesInFolder = dir.listFiles();
-    private String hostName = "10.0.0.104";
+    private String hostName = "10.0.0.150";
     private int port = 8081;
     private String split = "<>";
+
+
     public void setHostName(String s){
+
         this.hostName = s;
     }
     public File [] getFilesInFolder(){
+
         return this.filesInFolder;
     }
     public void setClientData(){ // sets client listview data on launch
@@ -40,12 +44,6 @@ public class Controller {
             clientData.add(f.getName());
         }
         clientDir.setItems(clientData);
-    }
-    public boolean isConnectionValid(String hostName) throws IOException {
-        if( new Socket(hostName,port).isConnected()){
-            return true;
-        }
-        return false;
     }
     public void initialize() throws IOException { // client
         setClientData();

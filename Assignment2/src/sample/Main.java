@@ -26,7 +26,7 @@ public class Main extends Application {
         loader.setController(c);
 
 //        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("File Sharing System");
         Scene scene = new Scene(root, 450, 600);
         scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
         primaryStage.setScene(scene);

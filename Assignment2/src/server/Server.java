@@ -10,7 +10,7 @@ public class Server {
 
     public static void main(String [] args) throws IOException{
         System.out.println("Server started...");
-        String hostName = "10.0.0.150"; // set as default local host -> change to IPV4
+        String hostName = "localhost"; // set as default local host -> change to IPV4
 
         System.out.println(InetAddress.getLocalHost());
         int port = 8081;

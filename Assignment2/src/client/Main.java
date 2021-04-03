@@ -17,7 +17,6 @@ public class Main extends Application {
         //ask user to enter server address before launching client application
         System.out.println("Launching Client...");
         Controller c = new Controller();
-        c.setHostName("10.0.0.104");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
         Parent root = loader.load();
         loader.setController(c);
